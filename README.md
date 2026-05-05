@@ -25,3 +25,10 @@ Basic workflow:
 3. Commit changes
 4. Push branch to GitHub
 5. Create a Pull Request
+
+## How to run
+
+Install dependencies:
+
+```bash
+npm install
