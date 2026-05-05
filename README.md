@@ -13,3 +13,15 @@ Pet-project for QA Automation learning.
 ## Project status
 
 In progress.
+
+## Git workflow
+
+This project uses feature branches for changes.
+
+Basic workflow:
+
+1. Create a feature branch
+2. Make changes
+3. Commit changes
+4. Push branch to GitHub
+5. Create a Pull Request
