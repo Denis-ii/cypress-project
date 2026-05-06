@@ -1,3 +1,3 @@
 # Real Git Conflict Practice
 
-Login validation strategy: check success message.
+Login validation strategy: check dashboard URL.
