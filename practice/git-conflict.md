@@ -1,3 +1,3 @@
 # Git Conflict Practice
 
-Current test strategy: UI tests first.
+Current test strategy: API tests first.
