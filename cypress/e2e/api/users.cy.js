@@ -3,23 +3,6 @@ const USER_BY_ID_ENDPOINT = '/users/1';
 const NOT_FOUND_USER_ENDPOINT = '/users/999999';
 const WRONG_ENDPOINT = '/wrong-endpoint';
 
-const newUser = {
-  name: 'Denis',
-  email: 'denis@test.com',
-  role: 'qa'
-};
-
-const updatedUser = {
-  name: 'Updated Denis',
-  email: 'updated@test.com',
-  role: 'qa automation'
-};
-
-const patchedUser = {
-  email: 'patched@test.com'
-};
-
-
 describe('Users API', () => {
     it('should get user by id', () => {
         cy.request('GET', USER_BY_ID_ENDPOINT)
@@ -51,35 +34,41 @@ describe('Users API', () => {
         });
     });
 
-      it('should create user', () => {
-    cy.request('POST', USERS_ENDPOINT, newUser)
-     .then((response) => {
-      expect(response.status).to.eq(201);
-      expect(response.body.name).to.eq(newUser.name);
-      expect(response.body.email).to.eq(newUser.email);
-      expect(response.body.role).to.eq(newUser.role);
-      expect(response.body.id).to.exist;
+    it('should create user', () => {
+    cy.fixture('users').then((users) => {
+      cy.request('POST', USERS_ENDPOINT, users.newUser)
+        .then((response) => {
+         expect(response.status).to.eq(201);
+         expect(response.body.name).to.eq(users.newUser.name);
+         expect(response.body.email).to.eq(users.newUser.email);
+        expect(response.body.role).to.eq(users.newUser.role);
+        expect(response.body.id).to.exist;
+     });
     });
   });
 
     it('should update user with PUT', () => {
-    cy.request('PUT', USER_BY_ID_ENDPOINT, updatedUser)
-    .then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.name).to.eq(updatedUser.name);
-      expect(response.body.email).to.eq(updatedUser.email);
-      expect(response.body.role).to.eq(updatedUser.role);
-      expect(response.body.id).to.eq(1);
-    });
-  });
+      cy.fixture('users').then((users) => {
+        cy.request('PUT', USER_BY_ID_ENDPOINT, users.updatedUser)
+        .then((response) => {
+          expect(response.status).to.eq(200);
+          expect(response.body.name).to.eq(users.updatedUser.name);
+          expect(response.body.email).to.eq(users.updatedUser.email);
+          expect(response.body.role).to.eq(users.updatedUser.role);
+          expect(response.body.id).to.eq(1);
+        });
+       });
+      });
 
     it('should update user with PATCH', () => {
-    cy.request('PATCH', USER_BY_ID_ENDPOINT, patchedUser)
-      .then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.email).to.eq(patchedUser.email);
-      expect(response.body.id).to.eq(1);
-    });
+      cy.fixture('users').then((users) => {
+        cy.request('PATCH', USER_BY_ID_ENDPOINT, users.patchedUser)
+        .then((response) => {
+          expect(response.status).to.eq(200);
+          expect(response.body.email).to.eq(users.patchedUser.email);
+          expect(response.body.id).to.eq(1);
+        });
+      });
   });
 
     it('should delete user', () => {

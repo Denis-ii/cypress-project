@@ -1,0 +1,15 @@
+{
+  "newUser": {
+    "name": "Denis",
+    "email": "denis@test.com",
+    "role": "qa"
+  },
+  "updatedUser": {
+    "name": "Updated Denis",
+    "email": "updated@test.com",
+    "role": "qa automation"
+  },
+  "patchedUser": {
+    "email": "patched@test.com"
+  }
+}
