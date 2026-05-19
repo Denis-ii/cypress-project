@@ -2,6 +2,9 @@ const NOT_FOUND_USER_ENDPOINT = '/users/999999';
 const WRONG_ENDPOINT = '/wrong-endpoint';
 
 describe('Users API', () => {
+  beforeEach(() => {
+    cy.fixture('users').as('users');
+  });
     it('should get user by id', () => {
       cy.getUserById(1)
       .then((response) =>{
@@ -31,7 +34,7 @@ describe('Users API', () => {
     });
 
     it('should create user', () => {
-      cy.fixture('users').then((users) => {
+      cy.get('@users').then((users) => {
         cy.createUser(users.newUser)
         .then((response) => {
           expect(response.status).to.eq(201);
@@ -44,7 +47,7 @@ describe('Users API', () => {
     });
 
     it('should update user with PUT', () => {
-      cy.fixture('users').then((users) => {
+      cy.get('@users').then((users) => {
         cy.updateUser(1, users.updatedUser)
         .then((response) => {
           expect(response.status).to.eq(200);
@@ -57,7 +60,7 @@ describe('Users API', () => {
     });
 
     it('should update user with PATCH', () => {
-      cy.fixture('users').then((users) => {
+      cy.get('@users').then((users) => {
         cy.patchUser(1, users.patchedUser)
         .then((response) => {
           expect(response.status).to.eq(200);
@@ -79,7 +82,8 @@ describe('Users API', () => {
         method: 'GET',
         url: NOT_FOUND_USER_ENDPOINT,
         failOnStatusCode: false
-      }).then((response) => {
+      })
+      .then((response) => {
         expect(response.status).to.eq(404);
         expect(response.body).to.be.empty;
       });
@@ -90,7 +94,8 @@ describe('Users API', () => {
         method: 'GET',
         url: WRONG_ENDPOINT,
         failOnStatusCode: false
-      }).then((response) => {
+      })
+      .then((response) => {
         expect(response.status).to.eq(404);
       });
     });
