@@ -1,5 +1,9 @@
-Cypress.Commands.add('getUserById', (id) => {
-  return cy.request('GET', `/users/${id}`);
+Cypress.Commands.add('getUserById', (id, options = {}) => {
+  return cy.request({
+    method: 'GET',
+    url: `/users/${id}`,
+    ...options
+  });
 });
 
 Cypress.Commands.add('getUsers', () => {

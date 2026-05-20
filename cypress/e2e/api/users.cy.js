@@ -78,11 +78,7 @@ describe('Users API', () => {
     }); 
 
     it('should return 404 for non-existing user', () => {
-      cy.request({
-        method: 'GET',
-        url: NOT_FOUND_USER_ENDPOINT,
-        failOnStatusCode: false
-      })
+      cy.getUserById(9999, {failOnStatusCode: false})
       .then((response) => {
         expect(response.status).to.eq(404);
         expect(response.body).to.be.empty;
