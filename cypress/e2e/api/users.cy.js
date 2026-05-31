@@ -1,3 +1,4 @@
+import { expectUserBody } from '../../helpers/userAssertions';
 const NOT_FOUND_USER_ENDPOINT = '/users/999999';
 const WRONG_ENDPOINT = '/wrong-endpoint';
 
@@ -13,9 +14,7 @@ describe('Users API', () => {
         expect(response.body.name).to.eq('Leanne Graham');
         expect(response.body.email).to.eq('Sincere@april.biz');
 
-        expect(response.body.id).to.be.a('number');
-        expect(response.body.name).to.be.a('string');
-        expect(response.body.email).to.be.a('string');
+        expectUserBody(response.body);
       });
     });
 
