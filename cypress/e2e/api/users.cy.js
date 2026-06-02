@@ -1,4 +1,4 @@
-import { expectUserBody } from '../../helpers/userAssertions';
+import { expectStatus, expectUserBody, expectUsersList } from '../../helpers/userAssertions';
 const NOT_FOUND_USER_ENDPOINT = '/users/999999';
 const WRONG_ENDPOINT = '/wrong-endpoint';
 
@@ -9,7 +9,7 @@ describe('Users API', () => {
     it('should get user by id', () => {
       cy.getUserById(1)
       .then((response) =>{
-        expect(response.status).to.eq(200);
+        expectStatus(response, 200);
         expect(response.body.id).to.eq(1);
         expect(response.body.name).to.eq('Leanne Graham');
         expect(response.body.email).to.eq('Sincere@april.biz');
@@ -21,14 +21,10 @@ describe('Users API', () => {
     it('should get users list', () => {
       cy.getUsers()
       .then((response) => {
-        expect(response.status).to.eq(200);
-        expect(response.body).to.be.an('array');
-        expect(response.body.length).to.eq(10);
+        expectStatus(response, 200);
+        expectUsersList(response.body);
         expect(response.body[0].id).to.eq(1);
         expect(response.body[0].email).to.eq('Sincere@april.biz');
-
-        expect(response.body[0].id).to.be.a('number');
-        expect(response.body[0].email).to.be.a('string');
       });
     });
 
@@ -36,7 +32,7 @@ describe('Users API', () => {
       cy.get('@users').then((users) => {
         cy.createUser(users.newUser)
         .then((response) => {
-          expect(response.status).to.eq(201);
+          expectStatus(response, 201);
           expect(response.body.name).to.eq(users.newUser.name);
           expect(response.body.email).to.eq(users.newUser.email);
           expect(response.body.role).to.eq(users.newUser.role);
@@ -49,7 +45,7 @@ describe('Users API', () => {
       cy.get('@users').then((users) => {
         cy.updateUser(1, users.updatedUser)
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expectStatus(response, 200);
           expect(response.body.name).to.eq(users.updatedUser.name);
           expect(response.body.email).to.eq(users.updatedUser.email);
           expect(response.body.role).to.eq(users.updatedUser.role);
@@ -62,7 +58,7 @@ describe('Users API', () => {
       cy.get('@users').then((users) => {
         cy.patchUser(1, users.patchedUser)
         .then((response) => {
-          expect(response.status).to.eq(200);
+          expectStatus(response, 200);
           expect(response.body.email).to.eq(users.patchedUser.email);
           expect(response.body.id).to.eq(1);
         });
@@ -72,14 +68,14 @@ describe('Users API', () => {
     it('should delete user', () => {
       cy.deleteUser(1)
       .then((response) => {
-        expect(response.status).to.eq(200);
+        expectStatus(response, 200);
       });
     }); 
 
     it('should return 404 for non-existing user', () => {
       cy.getUserById(9999, {failOnStatusCode: false})
       .then((response) => {
-        expect(response.status).to.eq(404);
+        expectStatus(response, 404);
         expect(response.body).to.be.empty;
       });
     }); 
@@ -91,7 +87,7 @@ describe('Users API', () => {
         failOnStatusCode: false
       })
       .then((response) => {
-        expect(response.status).to.eq(404);
+        expectStatus(response, 404);
       });
     });
    
