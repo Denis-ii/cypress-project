@@ -1,33 +1,9 @@
-import { expectStatus, expectUserBody, expectUsersList } from '../../helpers/userAssertions';
-const NOT_FOUND_USER_ENDPOINT = '/users/999999';
-const WRONG_ENDPOINT = '/wrong-endpoint';
+import { expectStatus, expectUserBody, expectUsersList } from '../../../helpers/userAssertions';
 
 describe('Users API', () => {
   beforeEach(() => {
     cy.fixture('users').as('users');
   });
-    it('should get user by id', () => {
-      cy.getUserById(1)
-      .then((response) =>{
-        expectStatus(response, 200);
-        expect(response.body.id).to.eq(1);
-        expect(response.body.name).to.eq('Leanne Graham');
-        expect(response.body.email).to.eq('Sincere@april.biz');
-
-        expectUserBody(response.body);
-      });
-    });
-
-    it('should get users list', () => {
-      cy.getUsers()
-      .then((response) => {
-        expectStatus(response, 200);
-        expectUsersList(response.body);
-        expect(response.body[0].id).to.eq(1);
-        expect(response.body[0].email).to.eq('Sincere@april.biz');
-      });
-    });
-
     it('should create user', () => {
       cy.get('@users').then((users) => {
         cy.createUser(users.newUser)
@@ -72,25 +48,4 @@ describe('Users API', () => {
       });
     }); 
 
-    it('should return 404 for non-existing user', () => {
-      cy.getUserById(9999, {failOnStatusCode: false})
-      .then((response) => {
-        expectStatus(response, 404);
-        expect(response.body).to.be.empty;
-      });
-    }); 
-
-    it('should return 404 for wrong endpoint', () => {
-      cy.request({
-        method: 'GET',
-        url: WRONG_ENDPOINT,
-        failOnStatusCode: false
-      })
-      .then((response) => {
-        expectStatus(response, 404);
-      });
-    });
-   
  });
-
-// для запуска через терминал npx cypress run --spec "cypress/e2e/api/users.cy.js" через купрес - npx cypress open

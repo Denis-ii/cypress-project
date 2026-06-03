@@ -4,7 +4,7 @@
     "scripts": {
         "test": "cypress run",
         "test:open": "cypress open",
-        "test:api" : "cypress run --spec \"cypress/e2e/api/users.cy.js\""
+        "test:api" : "cypress run --spec \"cypress/e2e/api/**/*.cy.js\""
     },
     "devDependencies": {
         "cypress": "^13.0.0"
