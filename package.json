@@ -1,13 +1,16 @@
 {
-    "name": "cypress-project",
-    "version": "1.0.0",
-    "scripts": {
-        "test": "cypress run",
-        "test:open": "cypress open",
-        "test:api" : "cypress run --spec \"cypress/e2e/api/**/*.cy.js\"",
-        "test:ui": "cypress run --spec \"cypress/e2e/ui/**/*.cy.js\""
-    },
-    "devDependencies": {
-        "cypress": "^13.0.0"
-    }
+  "name": "cypress-project",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "cypress run",
+    "test:open": "cypress open",
+    "test:api": "cypress run --spec \"cypress/e2e/api/**/*.cy.js\"",
+    "test:ui": "cypress run --spec \"cypress/e2e/ui/**/*.cy.js\"",
+    "test:pw": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.2",
+    "cypress": "^13.0.0"
+  }
 }
